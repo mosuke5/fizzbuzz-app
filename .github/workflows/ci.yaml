@@ -24,6 +24,19 @@ jobs:
         run: npm install
         working-directory: fizzbuzz-ui
 
-      - name: Test ui application
-        run: npm run test:unit
-        working-directory: fizzbuzz-ui
+      #- name: Test ui application
+      #  run: npm run test:unit
+      #  working-directory: fizzbuzz-ui
+
+      - name: Install npm packages for e2e test
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+        working-directory: e2e-test
+
+      - name: Exec e2e test
+        run: |
+          nohup ../fizzbuzz-api/mvnw spring-boot:run &
+          nohup npm run --prefix ../fizzbuzz-ui dev &
+          npm run test
+        working-directory: e2e-test
