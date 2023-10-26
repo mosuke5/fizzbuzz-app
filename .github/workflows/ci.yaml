@@ -1,0 +1,29 @@
+name: fizzbuzz ci
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - name: Test API application
+        run: ./mvnw clean test
+        working-directory: fizzbuzz-api
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Install npm packages
+        run: npm install
+        working-directory: fizzbuzz-ui
+
+      - name: Test ui application
+        run: npm run test:unit
+        working-directory: fizzbuzz-ui
