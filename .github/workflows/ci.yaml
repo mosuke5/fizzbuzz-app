@@ -39,8 +39,8 @@ jobs:
       - name: Exec e2e test
         run: |
           cd fizzbuzz-api
-          nohup ./mvnw spring-boot:run
+          nohup ./mvnw spring-boot:run &
           cd ../fizzbuzz-ui
-          nohup npm run --prefix ../fizzbuzz-ui dev
+          nohup npm run --prefix ../fizzbuzz-ui dev &
           cd ../e2e-test
           npm run test
